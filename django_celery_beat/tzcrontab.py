@@ -43,6 +43,8 @@ class TzAwareCrontab(schedules.crontab):
 
         """
         # convert last_run_at to the schedule timezone
+        if last_run_at.tzinfo is None:
+            last_run_at = pytz.utc.localize(last_run_at)
         last_run_at = last_run_at.astimezone(self.tz)
 
         rem_delta = self.remaining_estimate(last_run_at)
